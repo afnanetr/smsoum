@@ -87,6 +87,71 @@ const keys = {};
 let lastDirection = "front";
 let isPicking = false;
 
+// Mobile touch controls
+const mobileControls = {
+    up: false,
+    down: false,
+    left: false,
+    right: false
+};
+
+// Initialize mobile controls
+function initMobileControls(){
+    const btnUp = document.getElementById("btnUp");
+    const btnDown = document.getElementById("btnDown");
+    const btnLeft = document.getElementById("btnLeft");
+    const btnRight = document.getElementById("btnRight");
+    const btnJournal = document.getElementById("btnJournal");
+    const btnInventory = document.getElementById("btnInventory");
+    
+    if(!btnUp) return; // Exit if mobile controls aren't present
+    
+    // Direction buttons
+    const addDirectionListeners = (btn, direction) => {
+        btn.addEventListener("touchstart", (e) => {
+            e.preventDefault();
+            mobileControls[direction] = true;
+        });
+        btn.addEventListener("touchend", (e) => {
+            e.preventDefault();
+            mobileControls[direction] = false;
+        });
+        btn.addEventListener("mousedown", (e) => {
+            e.preventDefault();
+            mobileControls[direction] = true;
+        });
+        btn.addEventListener("mouseup", (e) => {
+            e.preventDefault();
+            mobileControls[direction] = false;
+        });
+    };
+    
+    addDirectionListeners(btnUp, "up");
+    addDirectionListeners(btnDown, "down");
+    addDirectionListeners(btnLeft, "left");
+    addDirectionListeners(btnRight, "right");
+    
+    // Action buttons
+    btnJournal.addEventListener("click", (e) => {
+        e.preventDefault();
+        if(journalModal.style.display === "block"){
+            journalModal.style.display = "none";
+        } else {
+            journalModal.style.display = "block";
+            updateJournalDisplay();
+        }
+    });
+    
+    btnInventory.addEventListener("click", (e) => {
+        e.preventDefault();
+        if(inventoryModal.style.display === "block"){
+            inventoryModal.style.display = "none";
+        } else {
+            inventoryModal.style.display = "block";
+        }
+    });
+}
+
 function showMessage(title, text){
     messageTitle.textContent = title;
     messageText.textContent = text;
@@ -106,6 +171,9 @@ startBtn.addEventListener("click", () => {
 
     // Initialize lightstick music
     initLightstickMusic("song.mp3");
+
+    // Initialize mobile controls
+    initMobileControls();
 
     initializeJournal();
 
@@ -511,10 +579,10 @@ function update(){
 
     if(!isPicking){
 
-        const up = keys["w"] || keys["z"] || keys["ArrowUp"];
-        const down = keys["s"] || keys["ArrowDown"];
-        const left = keys["a"] || keys["q"] || keys["ArrowLeft"];
-        const right = keys["d"] || keys["ArrowRight"];
+        const up = keys["w"] || keys["z"] || keys["ArrowUp"] || mobileControls.up;
+        const down = keys["s"] || keys["ArrowDown"] || mobileControls.down;
+        const left = keys["a"] || keys["q"] || keys["ArrowLeft"] || mobileControls.left;
+        const right = keys["d"] || keys["ArrowRight"] || mobileControls.right;
 
         // Movement
         if(up){
