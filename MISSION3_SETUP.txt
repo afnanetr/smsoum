@@ -1,0 +1,62 @@
+🌙 MISSION 3 SETUP INSTRUCTIONS
+================================
+
+## 📁 FILES NEEDED:
+1. night.png - The dark/night background image for Mission 3
+
+## 🔐 PASSWORD SETUP:
+Open script.js and find this line (around line 750):
+   let passwordCorrect = ""; // Set this to your password
+
+Change it to your password, for example:
+   let passwordCorrect = "BINI2024";
+
+## 💌 YOUR LETTER:
+Find this section in script.js (around line 755):
+   const yourLetter = `Dear [Name],
+   
+   [Write your letter here]
+   ...`;
+
+Replace it with your actual letter. Example:
+   const yourLetter = `Dear [Her Name],
+
+Happy Birthday! 🎂
+
+I hope you enjoyed this little adventure I made for you.
+You mean so much to me and I wanted to create something
+special to celebrate your day.
+
+Thank you for being amazing!
+
+With all my love,
+[Your Name]`;
+
+## 📝 HINTS IN JOURNAL:
+The hints section in the journal already exists!
+Players can press J to open the journal and see hints.
+
+To add hints, they're in the journal's "Hints" section.
+The password box will tell players to check the journal for hints.
+
+## 🎮 HOW MISSION 3 WORKS:
+
+1. After completing Mission 2, player heads to the door
+2. Scene changes to night.png (dark room)
+3. Player walks to the CENTER of the room
+4. Password box appears with:
+   - Password input field
+   - 10-minute countdown timer
+   - Hint: "Check the hints in your journal"
+5. Player can:
+   - Enter the correct password → Box opens immediately
+   - Wait 10 minutes → Box opens automatically
+   - Close the box and come back (timer keeps running)
+6. When box opens → Your letter appears
+7. After reading letter → Game complete message!
+
+## 🔧 TESTING:
+- Use the "Skip Level" button to quickly test Mission 3
+- Click it 3 times to skip all missions and test the password box
+
+================================

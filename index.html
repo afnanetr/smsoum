@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>SMSOUMTI Birthday Adventure</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="style_lightstick.css">
+</head>
+<body>
+
+<div id="menu">
+    <img id="menuImg" src="welcome.png" alt="Welcome">
+    <button id="startBtn"></button>
+</div>
+
+<div id="game">
+
+    <img id="room" src="room.png" alt="Room">
+
+    <img class="letter" id="letter1" src="letter.png">
+    <img class="letter" id="letter2" src="letter.png">
+    <img class="letter" id="letter3" src="letter.png">
+    <img class="letter" id="letter4" src="letter.png">
+    <img class="letter" id="letter5" src="letter.png">
+    <img class="letter" id="letter6" src="letter.png">
+    <img class="letter" id="letter7" src="letter.png">
+    <img class="letter" id="letter8" src="letter.png">
+
+    <img id="player" src="character_s_front.png" alt="Player">
+    
+    <!-- Treasure Box (Mission 3) -->
+    <div id="treasureBox" style="display:none;">
+        <img src="treasure.png" alt="Treasure Box" class="treasure-image">
+    </div>
+
+</div>
+
+<!-- Lightstick - Fixed on left side of page -->
+<div class="lightstick-fixed" id="lightstickFixed" style="display:none;">
+    <div class="lightstick" data-size="large">
+        <div class="dome">
+            <div class="dome-highlight"></div>
+            <div class="dome-inner">
+                <div class="house">
+                    <div class="roof"></div>
+                    <div class="house-body">
+                        <div class="door"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="collar">
+            <span class="collar-text">BINI</span>
+        </div>
+        <div class="handle">
+            <div class="button" id="lightstickButton"></div>
+            <div class="grip"></div>
+        </div>
+    </div>
+    
+    <!-- Lightstick instruction message -->
+    <div class="lightstick-message" id="lightstickMessage">
+        <p><strong>Double tap on it to light it!</strong></p>
+        <p>(Remember to light it when it's dark - it's so important)</p>
+        <p>now you can Open inventory I have a surprise for you</p>
+    </div>
+</div>
+
+<div id="messageBox">
+    <h2 id="messageTitle"></h2>
+    <p id="messageText"></p>
+</div>
+
+<!-- Journal UI -->
+<img id="journalBtn" src="journal_icon.png" alt="Journal">
+<img id="controlsImg" src="control.png" alt="Controls">
+
+<!-- Developer Tools (remove before release) -->
+<!--
+<button id="devSkipLevel">⏭️ SKIP LEVEL (DEV)</button>
+-->
+<div id="journalModal">
+    <div id="journalContent">
+        <button id="closeJournal">✕</button>
+        <h1> SMSOUMTI Journal</h1>
+        
+        <div id="progressSection">
+            <h2>Collection Progress</h2>
+            <div id="letterProgress">Letters: <span id="progressCount">0/8</span></div>
+            <div id="wordDisplay"></div>
+        </div>
+        
+        <div id="hintsSection">
+            <h2>Hints</h2>
+            <div id="hintsList"></div>
+        </div>
+        
+        <div id="photocardSection">
+            <h2> Photocard Collection</h2>
+            <div id="photocardGrid"></div>
+        </div>
+        <div id="journalTip">
+            Waaa try to guess what group this is waaaa
+        </div>
+    </div>
+</div>
+<div id="inventoryModal">
+    <div id="inventoryContent">
+        <button id="closeInventory">✕</button>
+        <h1>📦 Inventory</h1>
+        <div id="inventoryGrid">
+            <!-- Letter icon (appears after Mission 1) -->
+            <div class="inventory-slot" id="letterSlot" style="display:none;">
+                <img src="letter.png" alt="Letter" class="inventory-icon">
+                <div class="slot-label">Letter</div>
+            </div>
+            <!-- Lightstick icon (appears after Mission 2) -->
+            <div class="inventory-slot" id="lightstickSlot" style="display:none;">
+                <img src="lightstick.png" alt="Lightstick" class="inventory-icon">
+                <div class="slot-label">Lightstick</div>
+            </div>
+        </div>
+        <div id="emptyInventoryMessage">
+            <p>مكان والو هنا امبعد ولي</p>
+            <p class="empty-hint">(Complete Mission 1 first)</p>
+        </div>
+        <div id="inventoryInstructions" style="display:none;">
+            <p><strong>Lightstick Controls:</strong></p>
+            <p>• Click lightstick icon to equip/unequip</p>
+            <p>• When equipped, character holds it (front view only)</p>
+            <p>• Double-click the big lightstick on left to toggle light</p>
+            <p style="margin-top: 15px;"><strong>Letter:</strong></p>
+            <p>• Click to read your special letter</p>
+        </div>
+    </div>
+</div>
+
+<!-- Letter Reveal Popup -->
+<div id="revealPopup">
+    <div id="revealContent">
+        <h1> Physical Letter #<span id="revealLetterNum"></span> Collected!</h1>
+        <div id="revealCharacter">
+            <p>Character Revealed:</p>
+            <div class="bigChar" id="revealChar"></div>
+        </div>
+        <div id="revealPhotocard">
+            <p>Photocard Discovered:</p>
+            <img id="revealPhotocardImg" src="" alt="Photocard">
+            <p id="revealPhotocardName">Photocard recorded</p>
+        </div>
+        <p class="journalLog"> <em>Journal Status: Both the character "<span id="logChar"></span>" and <span id="logPhotocard"></span> have been logged to your Journal backend.</em></p>
+        <button id="continueBtn">Continue Adventure</button>
+    </div>
+</div>
+
+<!-- Password Box Modal (Mission 3) -->
+<div id="passwordBoxModal" style="display:none;">
+    <div id="passwordBoxContent">
+        <h1> Locked Box</h1>
+        <p class="box-hint">Enter the password to open the box</p>
+        <p class="box-hint-small">Hint: Check the hints in your journal (Press J)</p>
+        
+        <div id="passwordTimer">
+            <p>Time remaining: <span id="timerDisplay">10:00</span></p>
+            <div class="timer-bar">
+                <div class="timer-fill" id="timerFill"></div>
+            </div>
+        </div>
+        
+        <input type="text" id="passwordInput" placeholder="Enter password..." maxlength="20">
+        <button id="submitPassword">Submit</button>
+        <button id="openJournalFromBox" class="journal-btn">📘 Open Journal (Hints)</button>
+        <button id="closePasswordBox">Close</button>
+        <p id="passwordError" style="display:none; color:#c92a2a; margin-top:10px;"></p>
+    </div>
+</div>
+
+<!-- Lightstick Reminder Modal -->
+<div id="lightstickReminderModal" style="display:none;">
+    <div id="lightstickReminderContent">
+        <h1>⚠️ It's Too Dark!</h1>
+        <p class="reminder-text">Remember to light the lightstick!</p>
+        <p class="reminder-hint">Double-click the lightstick on the left side to turn it on.</p>
+        <p class="reminder-hint">The music will help guide you through the darkness.</p>
+        <button id="lightstickReminderDone">Done</button>
+    </div>
+</div>
+
+<!-- Letter Viewer Modal -->
+<div id="letterViewerModal" style="display:none;">
+    <div id="letterViewerContent">
+        <h1>💌 To My Smsoumti</h1>
+        <div id="letterViewerText">
+            <p>Akhhh bch nbda bch nkml, my beautiful samsouma even tho we've never met I've never considered you as an online friend (despite the fact that jamis ma tla9ina akhhhh) but I've always considered you as my best friend the friend I want to tell all my stories and secrets to.</p>
+            
+            <p>I wanted to do this little game as my first project even tho it's a small one but I wanted it to be about you so that I have the motivation to complete it haha.</p>
+            
+            <p>Almohim I can't describe how much I love you and how much I want to n3dk you were the friend I talked to in the nights after my bac and my first days at la fac, love you so much my babyyyyn7bk my mokaaaa.</p>
+            
+            <p>Nsit ma hdrtch 3la seventeen w boynextdoor hadi khliha f les msgs 💕</p>
+        </div>
+        <button id="closeLetterViewer">Close</button>
+    </div>
+</div>
+
+<!-- Final Letter Modal -->
+<div id="finalLetterModal" style="display:none;">
+    <div id="finalLetterContent">
+        <h1>💌 A Letter For You</h1>
+        <div id="finalLetterText">
+            <!-- Your letter will be inserted here -->
+        </div>
+        <button id="closeFinalLetter">Close</button>
+    </div>
+</div>
+
+<!-- Photocard Lightbox -->
+<div id="photocardLightbox">
+    <div id="lightboxContent">
+        <button id="closeLightbox">✕</button>
+        <button id="prevPhotocard">&lt;</button>
+        <img id="lightboxImage" src="" alt="Photocard">
+        <button id="nextPhotocard">&gt;</button>
+    </div>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>

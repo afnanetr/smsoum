@@ -1,0 +1,60 @@
+📋 MISSING FILES FOR YOUR GAME
+================================
+
+## ✅ INVENTORY IS WORKING!
+The inventory opens when you press "I" key.
+The code is already set up correctly at line 264-266 in script.js
+
+## 🎵 MUSIC FILE NEEDED:
+You need to add a music file for the lightstick.
+Supported formats: .mp3, .ogg, .wav
+
+Example filename: "bini_song.mp3"
+
+To add it:
+1. Place your music file in the game folder
+2. Open script.js
+3. Find line ~100 where the game starts (startBtn.addEventListener)
+4. Add this line:
+   initLightstickMusic("bini_song.mp3");
+
+## 🧩 MISSION 2 PIECES NEEDED:
+You need 5 piece images for Mission 2 (garden):
+
+Required files:
+- piece1.png
+- piece2.png
+- piece3.png
+- piece4.png
+- piece5.png
+
+These are the puzzle pieces players collect in the garden.
+They should be small items (60px width recommended).
+
+## 📦 PHOTOCARD FILES NEEDED:
+You need 3 more photocard images:
+
+Required files:
+- photocard_bnd_5.png
+- photocard_bnd_6.png
+- photocard_bnd_7.png
+
+You already have:
+✅ photocard_bnd_1.png
+✅ photocard_bnd_2.png
+✅ photocard_bnd_3.png
+✅ photocard_bnd_4.png
+
+## 🎮 CURRENT STATUS:
+✅ Inventory system - WORKING (press I)
+✅ Lightstick icon - EXISTS (lightstick.png)
+✅ Character with lightstick - EXISTS (character_lightstick.png)
+✅ Journal icon - EXISTS (journal_icon.png)
+✅ Garden background - EXISTS (garden.png)
+✅ Room background - EXISTS (room.png)
+
+❌ Music file - MISSING
+❌ 5 piece images - MISSING
+❌ 3 photocard images - MISSING
+
+================================

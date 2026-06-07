@@ -1,0 +1,1636 @@
+body{
+    margin:0;
+    background: #111;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    height:100vh;
+    overflow:hidden;
+    padding:0;
+}
+
+/* Responsive container for the game */
+#gameContainer{
+    width:100%;
+    height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    position:relative;
+}
+
+#game{
+    display:none;
+    position:relative;
+    width:1280px;
+    height:1000px;
+    overflow:hidden;
+    transform-origin:center center;
+}
+
+/* Responsive scaling */
+@media (max-width: 1400px) {
+    #game{
+        transform:scale(0.8);
+    }
+}
+
+@media (max-width: 1100px) {
+    #game{
+        transform:scale(0.65);
+    }
+}
+
+@media (max-width: 900px) {
+    #game{
+        transform:scale(0.5);
+    }
+}
+
+@media (max-width: 700px) {
+    #game{
+        transform:scale(0.4);
+    }
+}
+
+@media (max-width: 550px) {
+    #game{
+        transform:scale(0.3);
+    }
+}
+
+#room{
+    position:absolute;
+    inset:0;
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    z-index:1;
+}
+
+#player{
+    position:absolute;
+    width:150px;
+    height:auto;
+    left:600px;
+    top:500px;
+    z-index:10;
+}
+
+.letter{
+    position:absolute;
+    width:50px;
+    height:auto;
+    z-index:5;
+}
+
+#letter1{ left:150px; top:200px; }
+#letter2{ left:450px; top:150px; }
+#letter3{ left:900px; top:220px; }
+#letter4{ left:250px; top:500px; }
+#letter5{ left:720px; top:330px; }
+#letter6{ left:1050px; top:550px; }
+#letter7{ left:800px; top:750px; }
+#letter8{ left:520px; top:700px; }
+
+#menu{
+    position:fixed;
+    inset:0;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    z-index:999;
+}
+
+#menuImg{
+    width:100%;
+    height:100%;
+    object-fit:contain;
+    image-rendering:pixelated;
+}
+
+/* Completely invisible button */
+#startBtn{
+    position:absolute;
+    inset:0;
+    width:100%;
+    height:100%;
+    background:transparent;
+    border:none;
+    outline:none;
+    color:transparent;
+    font-size:0;
+    cursor:pointer;
+    z-index:1000;
+    padding:0;
+    margin:0;
+}
+#messageBox{
+    display:none;
+    position:absolute;
+    top:50%;
+    left:50%;
+    transform:translate(-50%,-50%);
+    width:720px;
+    max-width:90vw;
+    min-height:460px;
+    padding:80px 60px 50px;
+    box-sizing:border-box;
+    background:transparent url('mission_bg.png') center top / 100% auto no-repeat;
+    border:none;
+    text-align:center;
+    z-index:9999;
+    color:#eacdaf;
+}
+
+#messageTitle{
+    font-size:36px;
+    margin-bottom:16px;
+    font-family:Arial, sans-serif;
+    line-height:1.2;
+}
+
+#messageText{
+    font-size:24px;
+    line-height:1.6;
+    font-family:Arial, sans-serif;
+    margin:0 auto;
+    max-width:560px;
+    word-break:break-word;
+}
+
+/* Journal Button - Pixel Art Style */
+#journalBtn{
+    display:none;
+    position:fixed;
+    top:20px;
+    right:20px;
+    width:300px;
+    height:auto;
+    cursor:pointer;
+    z-index:10000;
+    image-rendering:pixelated;
+    transition:transform 0.1s;
+}
+
+#journalBtn:hover{
+    transform:scale(1.2);
+}
+
+/* Responsive journal button */
+@media (max-width: 1400px) {
+    #journalBtn{
+        width:250px;
+        top:15px;
+        right:15px;
+    }
+}
+
+@media (max-width: 900px) {
+    #journalBtn{
+        width:200px;
+        top:10px;
+        right:10px;
+    }
+}
+
+@media (max-width: 600px) {
+    #journalBtn{
+        width:150px;
+    }
+}
+
+#controlsImg{
+    display:none;
+    position:fixed;
+    right:20px;
+    bottom:20px;
+    width:500px;
+    height:auto;
+    cursor:default;
+    z-index:10000;
+    image-rendering:pixelated;
+}
+
+/* Responsive controls */
+@media (max-width: 1400px) {
+    #controlsImg{
+        width:400px;
+        right:15px;
+        bottom:15px;
+    }
+}
+
+@media (max-width: 900px) {
+    #controlsImg{
+        width:300px;
+        right:10px;
+        bottom:10px;
+    }
+}
+
+@media (max-width: 600px) {
+    #controlsImg{
+        width:200px;
+    }
+}
+
+/* Journal Modal - Pixel Art Style */
+#journalModal{
+    display:none;
+    position:fixed;
+    inset:0;
+    background:rgba(0,0,0,0.85);
+    z-index:10004;
+    overflow-y:auto;
+    image-rendering:pixelated;
+}
+
+#inventoryModal{
+    display:none;
+    position:fixed;
+    inset:0;
+    background:rgba(0,0,0,0.85);
+    z-index:10001;
+    overflow-y:auto;
+    image-rendering:pixelated;
+}
+
+#inventoryContent{
+    position:relative;
+    max-width:700px;
+    width:90%;
+    margin:30px auto;
+    background:#f5e6d3;
+    border:8px solid #8b6f6f;
+    border-radius:15px;
+    padding:40px;
+    color:#3d2929;
+    box-shadow:8px 8px 0 rgba(0,0,0,0.5);
+    font-family:'Courier New', monospace;
+    background-image:url('journal_bg.jpg');
+    background-size:cover;
+}
+
+/* Responsive inventory */
+@media (max-width: 800px) {
+    #inventoryContent{
+        width:85%;
+        padding:30px;
+    }
+}
+
+@media (max-width: 600px) {
+    #inventoryContent{
+        width:90%;
+        padding:20px;
+    }
+    
+    #inventoryGrid{
+        grid-template-columns:repeat(2, 1fr);
+    }
+}
+
+#closeJournal, #closeInventory{
+    position:absolute;
+    top:15px;
+    right:15px;
+    width:40px;
+    height:40px;
+    background:#d4a5a5;
+    color:#3d2929;
+    border:3px solid #8b6f6f;
+    border-radius:0;
+    font-size:24px;
+    cursor:pointer;
+    font-weight:bold;
+    box-shadow:3px 3px 0 #5a4444;
+}
+
+#closeJournal:hover, #closeInventory:hover{
+    background:#e0b5b5;
+}
+
+#journalContent{
+    position:relative;
+    max-width:900px;
+    width:90%;
+    margin:30px auto;
+    background:#f5e6d3;
+    border:8px solid #8b6f6f;
+    border-radius:15px;
+    padding:50px;
+    color:#3d2929;
+    box-shadow:8px 8px 0 rgba(0,0,0,0.5);
+    font-family:'Courier New', monospace;
+    background-image:url('journal_bg.jpg');
+    background-size:cover;
+}
+
+/* Responsive journal */
+@media (max-width: 1000px) {
+    #journalContent{
+        width:85%;
+        padding:30px;
+    }
+}
+
+@media (max-width: 700px) {
+    #journalContent{
+        width:90%;
+        padding:20px;
+        margin:20px auto;
+    }
+    
+    #journalContent h1{
+        font-size:24px;
+    }
+    
+    #journalContent h2{
+        font-size:18px;
+    }
+}
+
+#closeJournal{
+    position:absolute;
+    top:15px;
+    right:15px;
+    width:40px;
+    height:40px;
+    background:#d4a5a5;
+    color:#3d2929;
+    border:3px solid #8b6f6f;
+    border-radius:0;
+    font-size:24px;
+    cursor:pointer;
+    font-weight:bold;
+    box-shadow:3px 3px 0 #5a4444;
+}
+
+#closeJournal:hover{
+    background:#e0b5b5;
+}
+
+#journalContent h1{
+    text-align:center;
+    color:#3d2929;
+    margin-bottom:30px;
+    font-size:32px;
+    font-family:'Courier New', monospace;
+    text-transform:uppercase;
+    letter-spacing:2px;
+    text-shadow:2px 2px 0 rgba(255,255,255,0.5);
+}
+
+#journalContent h2{
+    color:#3d2929;
+    border-bottom:4px solid #8b6f6f;
+    padding-bottom:10px;
+    margin-top:30px;
+    font-family:'Courier New', monospace;
+    text-transform:uppercase;
+    font-size:20px;
+}
+
+#journalTip{
+    margin-top:20px;
+    padding:18px;
+    background:rgba(255,255,255,0.85);
+    border:4px dashed #8b6f6f;
+    color:#3d2929;
+    font-family:'Courier New', monospace;
+    font-size:16px;
+    text-align:center;
+    line-height:1.5;
+}
+
+#progressSection{
+    margin-bottom:30px;
+    background:rgba(255,255,255,0.6);
+    padding:20px;
+    border:4px solid #8b6f6f;
+}
+
+#letterProgress{
+    font-size:20px;
+    font-weight:bold;
+    margin:15px 0;
+    font-family:'Courier New', monospace;
+    text-transform:uppercase;
+}
+
+#wordDisplay{
+    display:flex;
+    gap:8px;
+    justify-content:center;
+    margin-top:20px;
+    flex-wrap:wrap;
+}
+
+.wordSlot{
+    width:50px;
+    height:60px;
+    background:#fff;
+    border:4px solid #8b6f6f;
+    border-radius:0;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:32px;
+    font-weight:bold;
+    color:#d4669f;
+    font-family:'Courier New', monospace;
+    box-shadow:3px 3px 0 rgba(0,0,0,0.3);
+    text-shadow:2px 2px 0 rgba(255,255,255,0.5);
+}
+
+.wordSlot.empty{
+    background:#a89080;
+    color:#6b5a4a;
+    box-shadow:inset 2px 2px 4px rgba(0,0,0,0.3);
+}
+
+#hintsSection{
+    margin-top:30px;
+    background:rgba(255,255,255,0.6);
+    padding:20px;
+    border:4px solid #8b6f6f;
+}
+
+#hintsList{
+    display:flex;
+    flex-direction:column;
+    gap:12px;
+    margin-top:15px;
+}
+
+.hintItem{
+    background:#fff;
+    border:3px solid #8b6f6f;
+    border-radius:6px;
+    padding:12px 15px;
+    font-family:'Courier New', monospace;
+    font-size:14px;
+    color:#3d2929;
+    line-height:1.4;
+}
+
+.hintItem.locked{
+    background:#d4a5a5;
+    opacity:0.7;
+}
+
+.hintItem.collected{
+    background:#fff;
+    border-color:#d4669f;
+}
+
+.hintItem strong{
+    color:#8b6f6f;
+    text-transform:uppercase;
+}
+
+#photocardGrid{
+    display:grid;
+    grid-template-columns:repeat(auto-fill, minmax(110px, 1fr));
+    gap:15px;
+    margin-top:20px;
+}
+
+.photocardItem{
+    background:#fff;
+    border:4px solid #8b6f6f;
+    border-radius:8px;
+    padding:8px;
+    text-align:center;
+    box-shadow:4px 4px 0 rgba(0,0,0,0.3);
+    font-family:'Courier New', monospace;
+    font-size:11px;
+    cursor:pointer;
+    transition:transform 0.2s ease;
+    aspect-ratio:2/3;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:space-between;
+}
+
+.photocardItem:hover{
+    transform:scale(1.05);
+}
+
+.photocardItem:active{
+    transform:scale(1.15);
+}
+
+.photocardItem img{
+    width:100%;
+    height:auto;
+    max-height:85%;
+    border:3px solid #8b6f6f;
+    border-radius:4px;
+    image-rendering:pixelated;
+}
+
+.photocardItem.locked{
+    background:#a89080;
+    opacity:1;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    aspect-ratio:2/3;
+}
+
+.photocardItem.locked img{
+    display:none;
+}
+
+/* Reveal Popup - Pixel Art Style */
+#revealPopup{
+    display:none;
+    position:fixed;
+    inset:0;
+    background:rgba(0,0,0,0.9);
+    z-index:10002;
+    align-items:center;
+    justify-content:center;
+}
+
+#revealContent{
+    background:#f5e6d3;
+    border:8px solid #8b6f6f;
+    border-radius:0;
+    padding:40px;
+    max-width:600px;
+    text-align:center;
+    color:#3d2929;
+    box-shadow:8px 8px 0 rgba(0,0,0,0.5);
+    font-family:'Courier New', monospace;
+}
+
+#revealContent h1{
+    font-size:24px;
+    margin-bottom:30px;
+    text-transform:uppercase;
+    letter-spacing:1px;
+}
+
+#revealCharacter{
+    margin:30px 0;
+}
+
+#revealCharacter p{
+    font-size:18px;
+    margin-bottom:15px;
+    text-transform:uppercase;
+}
+
+.bigChar{
+    font-size:80px;
+    font-weight:bold;
+    background:#fff;
+    color:#d4669f;
+    width:120px;
+    height:120px;
+    margin:0 auto;
+    border:6px solid #8b6f6f;
+    border-radius:0;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    box-shadow:6px 6px 0 rgba(0,0,0,0.3);
+    text-shadow:3px 3px 0 rgba(255,255,255,0.5);
+}
+
+#revealPhotocard{
+    margin:30px 0;
+}
+
+#revealPhotocard p{
+    font-size:18px;
+    margin-bottom:15px;
+    text-transform:uppercase;
+}
+
+#revealPhotocardImg{
+    width:200px;
+    height:auto;
+    border:6px solid #8b6f6f;
+    border-radius:0;
+    margin:15px auto;
+    display:block;
+    box-shadow:6px 6px 0 rgba(0,0,0,0.3);
+    image-rendering:pixelated;
+}
+
+#revealPhotocardName{
+    font-size:14px;
+    font-weight:bold;
+}
+
+.journalLog{
+    margin:25px 0;
+    font-size:14px;
+    background:rgba(212,165,165,0.3);
+    padding:15px;
+    border:3px solid #8b6f6f;
+    border-radius:0;
+    line-height:1.6;
+}
+
+#continueBtn{
+    background:#d4a5a5;
+    color:#3d2929;
+    border:4px solid #8b6f6f;
+    border-radius:0;
+    padding:15px 40px;
+    font-size:18px;
+    font-weight:bold;
+    cursor:pointer;
+    margin-top:20px;
+    font-family:'Courier New', monospace;
+    text-transform:uppercase;
+    box-shadow:4px 4px 0 #5a4444;
+}
+
+#continueBtn:hover{
+    background:#e0b5b5;
+    box-shadow:2px 2px 0 #5a4444;
+    transform:translate(2px, 2px);
+}
+
+/* Photocard Lightbox */
+#photocardLightbox{
+    display:none;
+    position:fixed;
+    inset:0;
+    background:rgba(0,0,0,0.95);
+    z-index:10003;
+    align-items:center;
+    justify-content:center;
+}
+
+#lightboxContent{
+    position:relative;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:20px;
+    max-width:90vw;
+    max-height:90vh;
+}
+
+#closeLightbox{
+    position:absolute;
+    top:20px;
+    right:20px;
+    width:50px;
+    height:50px;
+    background:#d4a5a5;
+    color:#3d2929;
+    border:4px solid #8b6f6f;
+    border-radius:50%;
+    font-size:32px;
+    cursor:pointer;
+    font-weight:bold;
+    box-shadow:4px 4px 0 rgba(0,0,0,0.5);
+    z-index:1;
+}
+
+#closeLightbox:hover{
+    background:#e0b5b5;
+}
+
+#prevPhotocard, #nextPhotocard{
+    width:60px;
+    height:60px;
+    background:#d4a5a5;
+    color:#3d2929;
+    border:4px solid #8b6f6f;
+    border-radius:50%;
+    font-size:32px;
+    cursor:pointer;
+    font-weight:bold;
+    box-shadow:4px 4px 0 rgba(0,0,0,0.5);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    transition:transform 0.2s;
+}
+
+#prevPhotocard:hover, #nextPhotocard:hover{
+    background:#e0b5b5;
+    transform:scale(1.1);
+}
+
+#lightboxImage{
+    max-width:400px;
+    max-height:600px;
+    width:auto;
+    height:auto;
+    border:8px solid #8b6f6f;
+    border-radius:12px;
+    box-shadow:0 0 30px rgba(0,0,0,0.8);
+    image-rendering:pixelated;
+}
+
+/* Lightstick Integration */
+/* Fixed lightstick on left side of page */
+.lightstick-fixed{
+    position:fixed;
+    left:50px;
+    top:50%;
+    transform:translateY(-50%) scale(0.7);
+    z-index:10003;
+    pointer-events:all;
+}
+
+/* Responsive lightstick */
+@media (max-width: 1400px) {
+    .lightstick-fixed{
+        left:30px;
+        transform:translateY(-50%) scale(0.6);
+    }
+}
+
+@media (max-width: 900px) {
+    .lightstick-fixed{
+        left:20px;
+        transform:translateY(-50%) scale(0.5);
+    }
+}
+
+@media (max-width: 600px) {
+    .lightstick-fixed{
+        left:10px;
+        transform:translateY(-50%) scale(0.4);
+    }
+}
+
+/* Lightstick instruction message */
+.lightstick-message{
+    position:absolute;
+    left:50%;
+    top:calc(100% + 30px);
+    transform:translateX(-50%);
+    background:#f5e6d3;
+    border:8px solid #8b6f6f;
+    border-radius:0;
+    padding:30px 35px;
+    font-family:'Courier New', monospace;
+    color:#3d2929;
+    box-shadow:10px 10px 0 rgba(0,0,0,0.5);
+    width:450px;
+    opacity:0;
+    animation:fadeInOut 10s forwards;
+    pointer-events:none;
+}
+
+.lightstick-message p{
+    margin:12px 0;
+    font-size:30px;
+    line-height:1.7;
+    text-align:center;
+    font-weight:bold;
+}
+
+.lightstick-message p:first-child{
+    font-size:40px;
+}
+
+.lightstick-message strong{
+    color:#8b4789;
+    font-size:40px;
+    font-weight:bold;
+}
+
+@keyframes fadeInOut{
+    0%{ opacity:0; transform:translateY(-50%) translateX(-20px); }
+    5%{ opacity:1; transform:translateY(-50%) translateX(0); }
+    85%{ opacity:1; transform:translateY(-50%) translateX(0); }
+    100%{ opacity:0; transform:translateY(-50%) translateX(-20px); }
+}
+
+.lightstick[data-size="large"]{
+    transform:scale(1.2);
+}
+
+.lightstick[data-size="small"]{
+    transform:scale(0.6);
+}
+
+.lightstick[data-size="normal"]{
+    transform:scale(1);
+}
+
+/* Inventory icon */
+.inventory-icon{
+    width:100%;
+    height:auto;
+    cursor:pointer;
+}
+
+.inventory-slot.equipped{
+    background:#ffe0b3;
+    border-color:#ff9933;
+}
+
+/* Inventory Modal */
+#inventoryModal{
+    display:none;
+    position:fixed;
+    inset:0;
+    background:rgba(0,0,0,0.85);
+    z-index:10001;
+    overflow-y:auto;
+    image-rendering:pixelated;
+}
+
+#inventoryContent{
+    position:relative;
+    max-width:600px;
+    margin:50px auto;
+    background:#f5e6d3;
+    border:8px solid #8b6f6f;
+    border-radius:0;
+    padding:40px;
+    color:#3d2929;
+    box-shadow:8px 8px 0 rgba(0,0,0,0.5);
+    font-family:'Courier New', monospace;
+}
+
+#closeInventory{
+    position:absolute;
+    top:15px;
+    right:15px;
+    width:40px;
+    height:40px;
+    background:#d4a5a5;
+    color:#3d2929;
+    border:3px solid #8b6f6f;
+    border-radius:0;
+    font-size:24px;
+    cursor:pointer;
+    font-weight:bold;
+    box-shadow:3px 3px 0 #5a4444;
+}
+
+#inventoryContent h1{
+    text-align:center;
+    color:#3d2929;
+    margin-bottom:30px;
+    font-size:28px;
+    text-transform:uppercase;
+}
+
+#inventoryGrid{
+    display:grid;
+    grid-template-columns:repeat(4, 1fr);
+    gap:15px;
+    margin:20px 0;
+}
+
+.inventory-slot{
+    background:#fff;
+    border:4px solid #8b6f6f;
+    border-radius:0;
+    padding:15px;
+    min-height:120px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    cursor:pointer;
+    transition:background 0.2s;
+}
+
+.inventory-slot:hover{
+    background:#f0f0f0;
+}
+
+.inventory-slot .lightstick{
+    transform:scale(0.3);
+}
+
+.slot-empty{
+    color:#999;
+    font-size:14px;
+    text-align:center;
+}
+
+#inventoryInstructions{
+    margin-top:20px;
+    padding:15px;
+    background:rgba(212,165,165,0.3);
+    border:3px solid #8b6f6f;
+    font-size:30px;
+    line-height:1.8;
+}
+
+#inventoryInstructions strong{
+    color:#8b4789;
+}
+
+/* Empty Inventory Message */
+#emptyInventoryMessage{
+    text-align:center;
+    padding:60px 20px;
+    color:#8b6f6f;
+}
+
+#emptyInventoryMessage p{
+    font-size:24px;
+    margin:15px 0;
+    font-weight:bold;
+}
+
+#emptyInventoryMessage .empty-hint{
+    font-size:14px;
+    color:#999;
+    font-weight:normal;
+    font-style:italic;
+}
+
+
+#player.holding-lightstick.standing{
+    content: url('character_lightstick.png');
+}
+
+/* Lightstick glow animation when on */
+@keyframes lightstickGlow{
+    0%, 100%{ filter:brightness(1); }
+    50%{ filter:brightness(1.2); }
+}
+
+.lightstick.lit{
+    animation:lightstickGlow 2s infinite;
+}
+
+/* Developer Tools (removed for production) */
+/*
+#devSkipLevel{
+    position:fixed;
+    bottom:20px;
+    left:20px;
+    padding:12px 20px;
+    background:#ff6b6b;
+    border:4px solid #c92a2a;
+    border-radius:0;
+    font-family:'Courier New', monospace;
+    font-size:16px;
+    font-weight:bold;
+    color:#fff;
+    cursor:pointer;
+    z-index:10000;
+    box-shadow:4px 4px 0 rgba(0,0,0,0.3);
+    text-transform:uppercase;
+}
+
+#devSkipLevel:hover{
+    background:#ff8787;
+    box-shadow:2px 2px 0 rgba(0,0,0,0.3);
+    transform:translate(2px, 2px);
+}
+
+#devSkipLevel:active{
+    background:#fa5252;
+}
+*/
+
+/* Mission 3 - Password Box */
+#passwordBoxModal{
+    position:fixed;
+    inset:0;
+    background:rgba(0,0,0,0.9);
+    z-index:10002;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+}
+
+#passwordBoxContent{
+    background:#f5e6d3;
+    border:8px solid #8b6f6f;
+    border-radius:0;
+    padding:40px;
+    max-width:500px;
+    width:90%;
+    text-align:center;
+    color:#3d2929;
+    box-shadow:10px 10px 0 rgba(0,0,0,0.5);
+    font-family:'Courier New', monospace;
+}
+
+/* Responsive password box */
+@media (max-width: 600px) {
+    #passwordBoxContent{
+        padding:30px 20px;
+        width:85%;
+    }
+    
+    #passwordBoxContent h1{
+        font-size:24px;
+    }
+}
+
+#passwordBoxContent h1{
+    font-size:32px;
+    margin-bottom:20px;
+    color:#8b4789;
+}
+
+.box-hint{
+    font-size:18px;
+    margin:15px 0;
+    font-weight:bold;
+}
+
+.box-hint-small{
+    font-size:14px;
+    color:#666;
+    margin-bottom:20px;
+}
+
+#passwordTimer{
+    margin:25px 0;
+    padding:20px;
+    background:rgba(139,71,137,0.1);
+    border:3px solid #8b4789;
+}
+
+#passwordTimer p{
+    font-size:20px;
+    font-weight:bold;
+    margin-bottom:10px;
+}
+
+#timerDisplay{
+    color:#c92a2a;
+    font-size:24px;
+}
+
+.timer-bar{
+    width:100%;
+    height:20px;
+    background:#ddd;
+    border:3px solid #8b6f6f;
+    margin-top:10px;
+}
+
+.timer-fill{
+    height:100%;
+    background:linear-gradient(90deg, #51cf66, #ffd43b, #ff6b6b);
+    transition:width 1s linear;
+    width:100%;
+}
+
+#passwordInput{
+    width:100%;
+    padding:15px;
+    font-size:18px;
+    font-family:'Courier New', monospace;
+    border:4px solid #8b6f6f;
+    background:#fff;
+    margin:20px 0 10px 0;
+    text-align:center;
+}
+
+#submitPassword, #closePasswordBox{
+    padding:12px 30px;
+    font-size:18px;
+    font-family:'Courier New', monospace;
+    font-weight:bold;
+    border:4px solid #8b6f6f;
+    background:#d4a5a5;
+    color:#3d2929;
+    cursor:pointer;
+    margin:5px;
+    box-shadow:4px 4px 0 #5a4444;
+}
+
+#submitPassword:hover, #closePasswordBox:hover{
+    background:#e0b5b5;
+}
+
+#submitPassword{
+    background:#8b4789;
+    color:#fff;
+    border-color:#6b3569;
+}
+
+#submitPassword:hover{
+    background:#9d5a9b;
+}
+
+.journal-btn{
+    padding:12px 25px;
+    font-size:16px;
+    font-family:'Courier New', monospace;
+    font-weight:bold;
+    border:4px solid #8b6f6f;
+    background:#ffd43b;
+    color:#3d2929;
+    cursor:pointer;
+    margin:10px 5px;
+    box-shadow:4px 4px 0 #5a4444;
+}
+
+.journal-btn:hover{
+    background:#ffe066;
+}
+
+/* Final Letter Modal */
+#finalLetterModal{
+    position:fixed;
+    inset:0;
+    background:rgba(0,0,0,0.95);
+    z-index:10003;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    overflow-y:auto;
+}
+
+#finalLetterContent{
+    background:#f5e6d3;
+    border:8px solid #8b6f6f;
+    border-radius:0;
+    padding:50px;
+    max-width:700px;
+    width:90%;
+    max-height:80vh;
+    overflow-y:auto;
+    color:#3d2929;
+    box-shadow:10px 10px 0 rgba(0,0,0,0.5);
+    font-family:'Courier New', monospace;
+    margin:20px;
+}
+
+/* Responsive final letter */
+@media (max-width: 800px) {
+    #finalLetterContent{
+        padding:40px 30px;
+        width:85%;
+    }
+}
+
+@media (max-width: 600px) {
+    #finalLetterContent{
+        padding:30px 20px;
+        width:90%;
+    }
+    
+    #finalLetterContent h1{
+        font-size:28px;
+    }
+    
+    #finalLetterText{
+        font-size:16px;
+    }
+}
+
+#finalLetterContent h1{
+    font-size:36px;
+    margin-bottom:30px;
+    color:#8b4789;
+    text-align:center;
+}
+
+#finalLetterText{
+    font-size:18px;
+    line-height:2;
+    margin:30px 0;
+    white-space:pre-wrap;
+    text-align:left;
+}
+
+#closeFinalLetter{
+    padding:15px 40px;
+    font-size:20px;
+    font-family:'Courier New', monospace;
+    font-weight:bold;
+    border:4px solid #8b6f6f;
+    background:#8b4789;
+    color:#fff;
+    cursor:pointer;
+    margin-top:30px;
+    box-shadow:4px 4px 0 #5a4444;
+    display:block;
+    margin-left:auto;
+    margin-right:auto;
+}
+
+#closeFinalLetter:hover{
+    background:#9d5a9b;
+}
+
+/* Treasure Box (Mission 3) */
+#treasureBox{
+    position:absolute;
+    left:50%;
+    top:50%;
+    transform:translate(-50%, -50%);
+    z-index:7;
+    cursor:pointer;
+}
+
+#treasureBox:hover .treasure-image{
+    transform:scale(1.1);
+    filter:brightness(1.2) drop-shadow(0 0 20px rgba(255,215,0,0.6));
+}
+
+.treasure-image{
+    width:200px;
+    height:auto;
+    image-rendering:pixelated;
+    transition:transform 0.3s, filter 0.3s;
+    filter:drop-shadow(0 10px 20px rgba(0,0,0,0.5));
+}
+
+/* Lightstick Reminder Modal */
+#lightstickReminderModal{
+    position:fixed;
+    inset:0;
+    background:rgba(0,0,0,0.95);
+    z-index:10002;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+}
+
+#lightstickReminderContent{
+    background:#f5e6d3;
+    border:8px solid #8b6f6f;
+    border-radius:0;
+    padding:40px;
+    max-width:500px;
+    text-align:center;
+    color:#3d2929;
+    box-shadow:10px 10px 0 rgba(0,0,0,0.5);
+    font-family:'Courier New', monospace;
+}
+
+#lightstickReminderContent h1{
+    font-size:32px;
+    margin-bottom:20px;
+    color:#c92a2a;
+}
+
+.reminder-text{
+    font-size:22px;
+    margin:20px 0;
+    font-weight:bold;
+    color:#8b4789;
+}
+
+.reminder-hint{
+    font-size:16px;
+    margin:15px 0;
+    line-height:1.6;
+}
+
+#lightstickReminderDone{
+    padding:15px 40px;
+    font-size:20px;
+    font-family:'Courier New', monospace;
+    font-weight:bold;
+    border:4px solid #8b6f6f;
+    background:#8b4789;
+    color:#fff;
+    cursor:pointer;
+    margin-top:20px;
+    box-shadow:4px 4px 0 #5a4444;
+}
+
+#lightstickReminderDone:hover{
+    background:#9d5a9b;
+}
+
+/* Letter Viewer Modal */
+#letterViewerModal{
+    position:fixed;
+    inset:0;
+    background:rgba(0,0,0,0.95);
+    z-index:10005;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+}
+
+#letterViewerContent{
+    background:#f5e6d3;
+    border:8px solid #8b6f6f;
+    border-radius:0;
+    padding:50px;
+    max-width:600px;
+    width:90%;
+    max-height:70vh;
+    overflow-y:auto;
+    text-align:center;
+    color:#3d2929;
+    box-shadow:10px 10px 0 rgba(0,0,0,0.5);
+    font-family:'Courier New', monospace;
+}
+
+/* Responsive letter viewer */
+@media (max-width: 700px) {
+    #letterViewerContent{
+        padding:30px 20px;
+        width:85%;
+        max-height:80vh;
+    }
+    
+    #letterViewerContent h1{
+        font-size:24px;
+    }
+    
+    #letterViewerText{
+        font-size:16px;
+    }
+}
+
+#letterViewerContent h1{
+    font-size:32px;
+    margin-bottom:30px;
+    color:#8b4789;
+}
+
+#letterViewerText{
+    font-size:18px;
+    line-height:1.8;
+    margin:30px 0;
+    text-align:left;
+    background:rgba(255,255,255,0.6);
+    padding:25px;
+    border:4px solid #8b6f6f;
+}
+
+#letterViewerText p{
+    margin:15px 0;
+}
+
+#closeLetterViewer{
+    padding:15px 40px;
+    font-size:20px;
+    font-family:'Courier New', monospace;
+    font-weight:bold;
+    border:4px solid #8b6f6f;
+    background:#8b4789;
+    color:#fff;
+    cursor:pointer;
+    margin-top:20px;
+    box-shadow:4px 4px 0 #5a4444;
+}
+
+#closeLetterViewer:hover{
+    background:#9d5a9b;
+}
+
+/* Inventory slot labels */
+.slot-label{
+    font-size:12px;
+    margin-top:8px;
+    color:#3d2929;
+    font-weight:bold;
+    text-transform:uppercase;
+}
+
+/* ==================== ADDITIONAL IMPROVEMENTS ==================== */
+
+/* Smooth transitions for all modals */
+#journalModal, #inventoryModal, #passwordBoxModal, #finalLetterModal, #lightstickReminderModal{
+    animation:fadeIn 0.3s ease-out;
+}
+
+@keyframes fadeIn{
+    from{ opacity:0; }
+    to{ opacity:1; }
+}
+
+/* Button hover effects for all buttons */
+button{
+    transition:all 0.2s ease;
+    user-select:none;
+}
+
+button:active{
+    transform:translateY(2px);
+    box-shadow:2px 2px 0 rgba(0,0,0,0.3) !important;
+}
+
+/* Player sprite smooth movement */
+#player{
+    transition:left 0.05s linear, top 0.05s linear;
+}
+
+/* Message box improved animation */
+#messageBox{
+    animation:slideUp 0.4s ease-out;
+}
+
+@keyframes slideUp{
+    from{
+        transform:translate(-50%, 20px);
+        opacity:0;
+    }
+    to{
+        transform:translate(-50%, -50%);
+        opacity:1;
+    }
+}
+
+/* Letter collection animation */
+.letter{
+    animation:letterPulse 2s ease-in-out infinite;
+}
+
+@keyframes letterPulse{
+    0%, 100%{ transform:scale(1); filter:brightness(1); }
+    50%{ transform:scale(1.05); filter:brightness(1.2); }
+}
+
+/* Journal button pulse */
+#journalBtn{
+    animation:journalPulse 3s ease-in-out infinite;
+}
+
+@keyframes journalPulse{
+    0%, 100%{ transform:scale(1); }
+    50%{ transform:scale(1.05); }
+}
+
+/* Improved scrollbar for modals */
+#journalContent::-webkit-scrollbar,
+#inventoryContent::-webkit-scrollbar,
+#finalLetterContent::-webkit-scrollbar{
+    width:12px;
+}
+
+#journalContent::-webkit-scrollbar-track,
+#inventoryContent::-webkit-scrollbar-track,
+#finalLetterContent::-webkit-scrollbar-track{
+    background:#d4a5a5;
+    border:2px solid #8b6f6f;
+}
+
+#journalContent::-webkit-scrollbar-thumb,
+#inventoryContent::-webkit-scrollbar-thumb,
+#finalLetterContent::-webkit-scrollbar-thumb{
+    background:#8b4789;
+    border:2px solid #6b3569;
+}
+
+#journalContent::-webkit-scrollbar-thumb:hover,
+#inventoryContent::-webkit-scrollbar-thumb:hover,
+#finalLetterContent::-webkit-scrollbar-thumb:hover{
+    background:#9d5a9b;
+}
+
+/* Loading states */
+.loading{
+    opacity:0.6;
+    pointer-events:none;
+}
+
+/* Focus styles for accessibility */
+button:focus,
+input:focus{
+    outline:3px solid #ffd43b;
+    outline-offset:2px;
+}
+
+/* Photocard hover effect */
+.photocardItem{
+    transition:transform 0.2s, box-shadow 0.2s;
+}
+
+.photocardItem:hover:not(.locked){
+    transform:translateY(-5px);
+    box-shadow:0 8px 16px rgba(0,0,0,0.3);
+}
+
+/* Word slot animation when revealed */
+.wordSlot{
+    animation:slotReveal 0.5s ease-out;
+}
+
+@keyframes slotReveal{
+    from{
+        transform:scale(0.8) rotateY(90deg);
+        opacity:0;
+    }
+    to{
+        transform:scale(1) rotateY(0deg);
+        opacity:1;
+    }
+}
+
+/* Timer bar color transitions */
+.timer-fill{
+    transition:width 1s linear, background 0.5s;
+}
+
+/* Dev button improved styling */
+#devSkipLevel{
+    animation:devPulse 2s infinite;
+}
+
+@keyframes devPulse{
+    0%, 100%{ opacity:0.8; }
+    50%{ opacity:1; }
+}
+
+/* Screen shake effect (for special moments) */
+@keyframes shake{
+    0%, 100%{ transform:translateX(0); }
+    10%, 30%, 50%, 70%, 90%{ transform:translateX(-5px); }
+    20%, 40%, 60%, 80%{ transform:translateX(5px); }
+}
+
+.shake{
+    animation:shake 0.5s;
+}
+
+/* Confetti animation (could be triggered on completion) */
+@keyframes confetti{
+    0%{ transform:translateY(-100vh) rotate(0deg); opacity:1; }
+    100%{ transform:translateY(100vh) rotate(720deg); opacity:0; }
+}
+
+/* Glow effect for important elements */
+.glow{
+    box-shadow:0 0 20px rgba(139,71,137,0.6), 0 0 40px rgba(139,71,137,0.4);
+    animation:glowPulse 2s infinite;
+}
+
+@keyframes glowPulse{
+    0%, 100%{ box-shadow:0 0 20px rgba(139,71,137,0.6); }
+    50%{ box-shadow:0 0 30px rgba(139,71,137,0.8), 0 0 60px rgba(139,71,137,0.6); }
+}
+
+/* Tooltip style (for future use) */
+.tooltip{
+    position:absolute;
+    background:#3d2929;
+    color:#fff;
+    padding:8px 12px;
+    border-radius:4px;
+    font-size:12px;
+    white-space:nowrap;
+    pointer-events:none;
+    z-index:10005;
+}
+
+/* Selection styling */
+::selection{
+    background:#8b4789;
+    color:#fff;
+}
+
+::-moz-selection{
+    background:#8b4789;
+    color:#fff;
+}
+
+/* Prevent text selection on game elements */
+#game, .lightstick-fixed, #treasureBox{
+    user-select:none;
+    -webkit-user-select:none;
+    -moz-user-select:none;
+}
+
+/* Responsive improvements (if screen is small) */
+@media (max-width: 1400px){
+    #game{
+        transform:scale(0.9);
+        transform-origin:top center;
+    }
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high){
+    body{
+        filter:contrast(1.2);
+    }
+}
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce){
+    *, *::before, *::after{
+        animation-duration:0.01ms !important;
+        animation-iteration-count:1 !important;
+        transition-duration:0.01ms !important;
+    }
+}
+
+/* Print styles (for letter) */
+@media print{
+    #game, #journalBtn, #devSkipLevel, .lightstick-fixed{
+        display:none !important;
+    }
+    
+    #finalLetterContent{
+        border:none;
+        box-shadow:none;
+    }
+}

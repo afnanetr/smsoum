@@ -1,0 +1,53 @@
+🔧 DEBUGGING INSTRUCTIONS
+========================
+
+All issues should now be fixed:
+
+✅ FIXED ISSUES:
+1. Lightstick now HIDDEN until Mission 2 is completed
+2. Skip button now properly unlocks lightstick in Mission 2
+3. Added console logging to debug lighting issues
+4. Removed conflicting CSS from style_lightstick.css
+
+HOW TO TEST:
+-----------
+
+1. Open the game in browser
+2. Press F12 to open Developer Console
+3. Click "Skip Level" button twice:
+   - First click: Skips Mission 1 (letters)
+   - Touch border to enter Mission 2
+   - Second click: Skips Mission 2 (pieces) and unlocks lightstick
+
+4. Check console for these messages:
+   - "Unlocking lightstick!"
+   - "Lightstick clicked. Unlocked: true"
+   - "Double-click detected!"
+   - "Toggling lightstick. New state: ON"
+   - "Added 'lit' class"
+
+5. Double-click the lightstick to turn it on
+
+TROUBLESHOOTING:
+---------------
+
+If lightstick doesn't light up:
+- Check console for "Added 'lit' class" message
+- Verify style_lightstick.css is loaded (check Network tab)
+- Look for CSS errors in console
+
+If lightstick appears before Mission 2:
+- Check that .lightstick-placed has "display:none" in style.css
+- Verify it only gets "unlocked" class after Mission 2
+
+If double-click doesn't work:
+- Check console for click count messages
+- Try clicking slower or faster
+- Verify lightstickUnlocked is true
+
+MUSIC SETUP:
+-----------
+To add music, add this line after game starts:
+initLightstickMusic("your_music_file.mp3");
+
+========================

@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>BOYNEXTDOOR Lightstick</title>
+</head>
+<body>
+  <div class="lightstick" id="lightstick">
+    <!-- Dome -->
+    <div class="dome" id="dome">
+      <div class="dome-inner">
+        <!-- House inside dome -->
+        <div class="house">
+          <div class="roof"></div>
+          <div class="house-body">
+            <div class="door"></div>
+          </div>
+        </div>
+      </div>
+      <!-- Dome highlight -->
+      <div class="dome-highlight"></div>
+    </div>
+
+    <!-- Collar -->
+    <div class="collar">
+      <span class="collar-text">BOYNEXTDOOR</span>
+    </div>
+
+    <!-- Handle -->
+    <div class="handle">
+      <div class="button" id="powerBtn"></div>
+      <div class="grip"></div>
+    </div>
+  </div>
+
+  <script>
+    const lightstick = document.getElementById('lightstick');
+    const powerBtn = document.getElementById('powerBtn');
+    let isOn = false;
+
+    powerBtn.addEventListener('click', () => {
+      isOn = !isOn;
+      lightstick.classList.toggle('lit', isOn);
+    });
+  </script>
+</body>
+</html>
